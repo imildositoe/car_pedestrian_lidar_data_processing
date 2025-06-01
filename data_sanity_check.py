@@ -14,6 +14,8 @@ FOLDER_PATHS = [
     r"C:\Users\Dell 88\Desktop\LiDar Data\Data Lidar-20250519\192.168.26.26_2020-11-25_20-01-45_frame-2566_part_4"
 ]
 
+# Finding and counting the csv files
+# Counting the total found frames
 all_frames = []
 
 for folder in FOLDER_PATHS:
@@ -25,8 +27,8 @@ for folder in FOLDER_PATHS:
     print(f"Found {len(csv_files)} files from: {folder}")
     
     for csv_file in csv_files:
-        df = pd.read_csv(csv_file)
-        df['frame_id'] = os.path.basename(csv_file)
+        df = pd.read_csv(csv_file, delimiter=';')
+        df['FRAME_ID'] = os.path.basename(csv_file)
         all_frames.append(df)
 
 print(f"Total loaded frames: {len(all_frames)}")
