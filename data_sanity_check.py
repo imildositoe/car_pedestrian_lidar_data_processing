@@ -5,7 +5,6 @@ import os
 from glob import glob
 import open3d as o3d
 
-
 # Specifying the folders with the datasets
 FOLDER_PATHS = [
     r"C:\Users\Dell 88\Desktop\LiDar Data\Data Lidar-20250519\192.168.26.26_2020-11-25_20-01-45_frame-1899_part_1",
@@ -32,3 +31,12 @@ for folder in FOLDER_PATHS:
         all_frames.append(df)
 
 print(f"Total loaded frames: {len(all_frames)}")
+
+# This snippet is for the coordinate distribution sanity check
+distances = [df['DISTANCE'].values for df in all_frames]
+distances_flat = np.concatenate(distances)
+print("\nDistance Check")
+print(f"Min Distance: {distances_flat.min():.2f} m")
+print(f"Max Distance: {distances_flat.max():.2f} m")
+print(f"Outside range (5-250m): {np.sum((distances_flat < 5) | (distances_flat > 250))} points")
+
