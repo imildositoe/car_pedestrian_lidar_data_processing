@@ -40,3 +40,14 @@ print(f"Min Distance: {distances_flat.min():.2f} m")
 print(f"Max Distance: {distances_flat.max():.2f} m")
 print(f"Outside range (5-250m): {np.sum((distances_flat < 5) | (distances_flat > 250))} points")
 
+# This snippet is for the temporal coherence sanity check
+timestamps = [df['TIMESTAMP'].values[0] for df in all_frames]
+sorted_ts = np.sort(timestamps)
+gaps = np.diff(sorted_ts)
+print("\nTimestamp Check")
+print(f"Avg time step: {np.mean(gaps):.2e}")
+print(f"Max gap: {np.max(gaps):.2e}")
+print(f"Min gap: {np.min(gaps):.2e}")
+if np.any(gaps > 1e6):
+    print("Warning: Potential missing frames")
+
