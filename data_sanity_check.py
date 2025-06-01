@@ -51,3 +51,25 @@ print(f"Min gap: {np.min(gaps):.2e}")
 if np.any(gaps > 1e6):
     print("Warning: Potential missing frames")
 
+# This snippet is for the point cloud density sanity check
+point_counts = [len(df) for df in all_frames]
+print("\nPoint Cloud Density Check")
+print(f"Average points per frame: {np.mean(point_counts):.0f}")
+print(f"Min points: {np.min(point_counts)}")
+print(f"Max points: {np.max(point_counts)}")
+
+# This snippet is for the visualization of a sample framepoint cloud density
+def visualize_frame(df):
+    pcd = o3d.geometry.PointCloud()
+    points = df[['X', 'Y', 'Z']].values
+    pcd.points = o3d.utility.Vector3dVector(points)
+
+    colors = np.zeros((len(points), 3))
+    intensity_scaled = df['INTENSITY'].values / df['INTENSITY'].max()
+    colors[:, 0] = intensity_scaled
+    pcd.colors = o3d.utility.Vector3dVector(colors)
+    
+    o3d.visualization.draw_geometries([pcd], window_name="FramePoint Cloud")
+
+sample_df = all_frames[len(all_frames) // 2]
+visualize_frame(sample_df)
