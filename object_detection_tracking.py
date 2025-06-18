@@ -138,3 +138,8 @@ total_predictions = len(y_true)
 accuracy = correct_predictions / total_predictions
 print(f"Correct classification rate: {accuracy:.5f}")
 
+# Snippet to print the overall evaluation summary.
+print("\nOverall Evaluation Summary:")
+print(f"Total objects evaluated: {total_predictions}")
+print(f"Correctly classified: {correct_predictions}")
+print(f"False positives: {false_positives}")
