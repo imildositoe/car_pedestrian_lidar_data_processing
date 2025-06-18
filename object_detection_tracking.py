@@ -106,3 +106,15 @@ plt.grid(True)
 plt.show()
 
 
+# Block to evaluate the performance of the algorithm.
+# It was used the y_true generated randomly, which emulates the labeled ground truth.
+y_true = np.random.choice(
+    ['pedestrian', 'cyclist', 'parked car', 'vehicle', 'row of houses', 'treetop'], 
+    size=len(all_tracks_df)
+)
+y_pred = all_tracks_df['object_type']
+
+# Printing the classification report.
+print("\nClassification Report:")
+print(classification_report(y_true, y_pred, zero_division=0))
+
