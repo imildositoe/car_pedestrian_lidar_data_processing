@@ -127,3 +127,14 @@ plt.ylabel("True Label")
 plt.xlabel("Predicted Label")
 plt.show()
 
+# Snippet to compute and print the False Alarm Rate.
+false_positives = (y_pred != y_true).sum()
+false_alarm_rate = false_positives / 7200
+print(f"False alarm rate: {false_alarm_rate:.5f} per hour")
+
+# Snippet to compute and print the correct classification rate.
+correct_predictions = (y_pred == y_true).sum()
+total_predictions = len(y_true)
+accuracy = correct_predictions / total_predictions
+print(f"Correct classification rate: {accuracy:.5f}")
+
