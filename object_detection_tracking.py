@@ -88,3 +88,8 @@ def classify_object(track_df):
     else:
         return 'vehicle'
 
+track_labels = []
+for tid, track in all_tracks_df.groupby('track_id'):
+    label = classify_object(track)
+    all_tracks_df.loc[all_tracks_df['track_id'] == tid, 'object_type'] = label
+
