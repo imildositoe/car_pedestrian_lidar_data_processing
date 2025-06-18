@@ -93,3 +93,16 @@ for tid, track in all_tracks_df.groupby('track_id'):
     label = classify_object(track)
     all_tracks_df.loc[all_tracks_df['track_id'] == tid, 'object_type'] = label
 
+# This snippet is responsible for plotting the resulting tracked objects
+plt.figure(figsize=(10, 6))
+for obj_type in all_tracks_df['object_type'].unique():
+    subset = all_tracks_df[all_tracks_df['object_type'] == obj_type]
+    plt.scatter(subset['X'], subset['Y'], label=obj_type, alpha=0.6)
+plt.legend()
+plt.title("Classified Objects Over Time")
+plt.xlabel("X")
+plt.ylabel("Y")
+plt.grid(True)
+plt.show()
+
+
