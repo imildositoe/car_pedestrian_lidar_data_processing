@@ -66,3 +66,25 @@ for frame_id, detections in enumerate(all_detections):
     tracks.append(detections)
     last_centroids = detections[['X', 'Y', 'Z', 'track_id']]
 
+all_tracks_df = pd.concat(tracks, ignore_index=True)
+
+# This snippet is to classify the objects using the custom-defined heuristic method.
+def classify_object(track_df):
+    size_xy = np.linalg.norm(track_df[['X', 'Y']].max() - track_df[['X', 'Y']].min())
+    height = track_df['Z'].max() - track_df['Z'].min()
+    duration = track_df['frame_index'].nunique()
+    mean_motion = track_df[['X', 'Y']].diff().abs().mean().mean()
+
+    if height > 3.5:
+        return 'treetop'
+    elif size_xy > 10 and duration > 100:
+        return 'row of houses'
+    elif height < 0.5 and size_xy < 1.0:
+        return 'pedestrian'
+    elif size_xy < 2.0:
+        return 'cyclist'
+    elif mean_motion < 0.01:
+        return 'parked car'
+    else:
+        return 'vehicle'
+
