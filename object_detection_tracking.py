@@ -118,3 +118,12 @@ y_pred = all_tracks_df['object_type']
 print("\nClassification Report:")
 print(classification_report(y_true, y_pred, zero_division=0))
 
+# Snippet to plot the Confusion Matrix.
+labels = ['pedestrian', 'cyclist', 'parked car', 'vehicle', 'row of houses', 'treetop']
+conf_matrix = confusion_matrix(y_true, y_pred, labels=labels)
+sns.heatmap(conf_matrix, annot=True, xticklabels=labels, yticklabels=labels, fmt='d', cmap='Blues')
+plt.title("Confusion Matrix")
+plt.ylabel("True Label")
+plt.xlabel("Predicted Label")
+plt.show()
+
